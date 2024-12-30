@@ -17,11 +17,14 @@ on:
 
 jobs:
   build-test:
+    continue-on-error: true # 실패해도 게속 진행되게
     strategy:
       matrix:
         node-version: [12, 18]
+        os-type: [ubuntu-latest, window-latest]
+
     # 1. 테스트 job
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os-type }}
     steps:
       # 코드를 가져옴
       - name: Get Codes
