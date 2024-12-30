@@ -14,4 +14,12 @@ jobs:
       - name: Get Codes #사용자 지정
         uses: actions/checkout@v4
 
+      # 의존성 파일을 설치
+      - name: Install Dependencies
+        run: npm Install
+
+      # 테스트 실행
+      - name: Run Test
+        run: npm run test
+
   # 2.빌드 job
