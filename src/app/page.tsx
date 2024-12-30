@@ -38,6 +38,11 @@ export default function Home() {
     alert("삭제되었습니다.");
   };
 
+  const url = process.env.NEXT_PUBLIC_API_URL;
+  if (!url) {
+    throw new Error("API URL is not defined");
+  }
+
   useEffect(() => {
     fetchAllTodos().then((items) => setTodos(items));
   }, []);
