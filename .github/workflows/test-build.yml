@@ -16,7 +16,7 @@ jobs:
 
       # 의존성 파일을 설치
       - name: Install Dependencies
-        run: npm Install
+        run: npm install
 
       # 테스트 실행
       - name: Run Test
