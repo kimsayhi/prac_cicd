@@ -1,0 +1,45 @@
+name: CI
+on:
+  push:
+    branches:
+      - dev
+      - feat/**
+
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
+# 1. 테스트
+# 2. PR
+jobs:
+  run-test:
+    name: Run test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloads Codes
+        uses: actions/checkout@v4
+
+      - name: Install Deps
+        run: npm install
+
+      - name: Run Test
+        run: npm run test
+
+      - name: Run Build
+        run: npm run build
+
+  create-pr:
+    needs: run-test
+    name: Create PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloads Codes
+        uses: actions/checkout@v4
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "chore: create pr test"
+          body: "this is a test pr"
+          base: main # 머지가 될 브랜치
+          branch: ${{ github.ref }} # push가 발생한 브랜치
+          token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
